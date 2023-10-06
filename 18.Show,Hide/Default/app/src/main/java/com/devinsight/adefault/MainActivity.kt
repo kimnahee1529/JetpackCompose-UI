@@ -6,9 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devinsight.adefault.ui.theme.DefaultTheme
 
@@ -26,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DefaultTheme {
-                MyShowHideEx1()
+                MyShowHideEx2()
             }
         }
     }
@@ -71,11 +74,38 @@ fun MyShowHideEx1(){
     }
 }
 
+@Composable
+fun MyShowHideEx2(){
+
+    var switchState by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier.padding(20.dp)
+    ) {
+        Switch(
+            checked = switchState,
+            onCheckedChange = { checked ->
+                switchState = checked
+            }
+        )
+        Text(
+            text = if(switchState) "ON" else  "OFF",
+            fontSize = 30.sp
+        )
+
+        if(switchState){
+            Button(onClick = {}) {
+                Text(text = "얍얍")
+            }
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     DefaultTheme {
-        MyShowHideEx1()
+        MyShowHideEx2()
     }
 }

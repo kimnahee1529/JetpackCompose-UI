@@ -3,6 +3,7 @@ package com.nhkim.graph
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,11 +23,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nhkim.graph.screen.Graph1
 import com.nhkim.graph.screen.Graph2
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GraphTheme {
-
+                GraphAppMain()
             }
         }
     }
@@ -53,7 +56,7 @@ fun GraphAppMain(){
     val navItems = listOf(
         NavigationItem("그래프1", Icons.Default.AddCircle, "tab1"),
         NavigationItem("그래프2", Icons.Default.AddCircle, "tab2"),
-        NavigationItem("그래프3", Icons.Default.AddCircle, "tab2")
+        NavigationItem("그래프3", Icons.Default.AddCircle, "tab3")
     )
 
     Scaffold(
@@ -64,12 +67,28 @@ fun GraphAppMain(){
                     horizontalArrangement = Arrangement.SpaceAround
                 ){
                     navItems.forEach { nav->
+                        //현재 route
+                        val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
                         Column(
                             verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.clickable{
+                                navController.navigate(nav.route)
+                            }
                         ) {
-                            Icon(imageVector = nav.icon, contentDescription = nav.name)
-                            Text(text = nav.name)
+                            //true : 현재 클릭된 탭
+                            //false : 현재 클릭되지 않은 탭
+                            val isCurrentRoute = currentRoute == nav.route
+
+                            Icon(
+                                imageVector = nav.icon,
+                                contentDescription = nav.name,
+                                tint = if (isCurrentRoute) Color.Red else Color.Black
+                            )
+                            Text(
+                                text = nav.name,
+                                color = if (isCurrentRoute) Color.Red else Color.Black
+                            )
                         }
                     }
                 }

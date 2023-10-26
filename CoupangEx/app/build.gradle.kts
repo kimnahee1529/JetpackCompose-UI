@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.nhkim.coupangex1"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.nhkim.coupangex1"
@@ -66,4 +66,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation ("com.google.accompanist:accompanist-pager:0.20.2")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.20.2")
 }

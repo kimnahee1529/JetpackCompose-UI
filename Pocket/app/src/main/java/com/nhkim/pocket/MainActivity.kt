@@ -133,7 +133,8 @@ fun PocketBack(){
                     text = "파이리",
                     color = Color.White,
                     fontSize = 30.sp,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
         }
